@@ -2,7 +2,7 @@
 // Project: https://github.com/75lb/table-layout
 // Definitions by: Jordi Oliveras Rovira <https://github.com/j-oliveras>
 
-declare namespace tableLayout {
+declare namespace TableLayout {
   export interface ColumnOptions {
     /**
      * Column name, must match a property name in the input.
@@ -27,7 +27,12 @@ declare namespace tableLayout {
     /**
      * Disable wrapping for this column.
      */
-    nowrap?: boolean;
+    noWrap?: boolean;
+
+    /**
+     * Disable line-trimming for this column.
+     */
+    noTrim?: boolean;
 
     /**
      * Enable word-breaking for this columns.
@@ -63,7 +68,12 @@ declare namespace tableLayout {
     /**
      * Disable wrapping on all columns.
      */
-    nowrap?: boolean;
+    noWrap?: boolean;
+
+    /**
+     * Disable line-trimming for this column.
+     */
+    noTrim?: boolean;
 
     /**
      * Enable word-breaking on all columns.
@@ -75,6 +85,9 @@ declare namespace tableLayout {
      */
     columns?: Array<ColumnOptions>;
 
+    /**
+     * If set, empty columns or columns containing only whitespace are not rendered.
+     */
     ignoreEmptyColumns?: boolean;
 
     /**
@@ -93,18 +106,20 @@ declare namespace tableLayout {
       right?: string;
     };
   }
-
-  /**
-   * Identical to the default function with the exception
-   * of the rendered result being returned as an array of
-   * lines, rather that a single string.
-   */
-  export function lines(data: Array<any>, options?: Options): Array<string>;
 }
 
-/**
- * Render the data into an string.
- */
-declare function tableLayout(data: Array<any>, options?: tableLayout.Options): string;
+declare class TableLayout{
+  public constructor(data: Array<any>, options?: TableLayout.Options);
+  
+  /**
+   * Identical to .toString() with the exception that the result will be an array of lines, rather than a single, multi-line string.
+   */
+  public renderLines(): Array<string>;
+  
+  /**
+   * Returns the input data as a text table.
+   */
+  public toString(): string;
+}
 
-export = tableLayout;
+export = TableLayout;
