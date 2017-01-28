@@ -108,14 +108,14 @@ declare namespace TableLayout {
   }
 }
 
-declare class TableLayout{
+declare class TableLayout {
   public constructor(data: Array<any>, options?: TableLayout.Options);
-  
+
   /**
    * Identical to .toString() with the exception that the result will be an array of lines, rather than a single, multi-line string.
    */
   public renderLines(): Array<string>;
-  
+
   /**
    * Returns the input data as a text table.
    */
