@@ -1,10 +1,10 @@
 /// <reference path="../out/index.d.ts" />
 
-import test = require('blue-tape');
+import * as test from 'blue-tape';
 
-import tableLayout = require('table-layout');
+import * as TableLayout from 'table-layout';
 
-import os = require('os');
+import * as os from 'os';
 
 function joinExpected(expected: Array<string>): string {
   return expected.join(os.EOL) + os.EOL;
@@ -20,7 +20,7 @@ const officialDataFromSynopsisSample = [
 ];
 
 test('Synopsis: two columns same width', t => {
-  const options: tableLayout.Options = {
+  const options: TableLayout.Options = {
     maxWidth: 86
   };
   const expectedRows = [
@@ -38,16 +38,16 @@ test('Synopsis: two columns same width', t => {
     '                                            vehicles and between 600–700,000 horses.  '
   ];
 
-  const result = tableLayout(officialDataFromSynopsisSample, options);
+  const result = new TableLayout(officialDataFromSynopsisSample, options).toString();
   t.equals(result, joinExpected(expectedRows));
 
-  const resultLines = tableLayout.lines(officialDataFromSynopsisSample, options);
+  const resultLines = new TableLayout(officialDataFromSynopsisSample, options).renderLines();
   t.deepEquals(resultLines, expectedRows);
 }).
 end();
 
 test('Synopsis: two columns diferent width', t => {
-  const options: tableLayout.Options = {
+  const options: TableLayout.Options = {
     maxWidth: 86,
     columns: [
       {
@@ -73,10 +73,10 @@ test('Synopsis: two columns diferent width', t => {
     ' Kingdom of England.                                                                  '
   ];
 
-  const result = tableLayout(officialDataFromSynopsisSample, options);
+  const result = new TableLayout(officialDataFromSynopsisSample, options).toString();
   t.equals(result, joinExpected(expectedRows));
 
-  const resultLines = tableLayout.lines(officialDataFromSynopsisSample, options);
+  const resultLines = new TableLayout(officialDataFromSynopsisSample, options).renderLines();
   t.deepEquals(resultLines, expectedRows);
 }).
 end();
@@ -100,10 +100,10 @@ test('API sample', t => {
     ' layout                       '
   ];
 
-  const result = tableLayout(jsonData, options);
+  const result = new TableLayout(jsonData, options).toString();
   t.equals(result, joinExpected(expectedRows));
 
-  const resultLines = tableLayout.lines(jsonData, options);
+  const resultLines = new TableLayout(jsonData, options).renderLines();
   t.deepEquals(resultLines, expectedRows);
 }).
 end();
